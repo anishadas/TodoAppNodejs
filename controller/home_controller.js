@@ -1,6 +1,8 @@
 // localhost:8000
 module.exports.home = (req, res) => {
-    return res.send('<h1>codeial is set to route</h1>')
+    return res.render('home', {
+        title:"Home"
+    })
 }
 
 // localhost:8000/info
