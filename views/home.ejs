@@ -1,10 +1,86 @@
 <html>
     <head>
+        <script src="https://kit.fontawesome.com/eab6c7e050.js"
+            crossorigin="anonymous"></script>
         <title><%= title %></title>
+        <link href="/css/home.css" rel="stylesheet">
     </head>
     <body>
-        <h1>
-            CODEIAL / <%= title  %>
-        </h1>
+        <div class="main">
+            <h1>TODO App</h1>
+            <div class="container">
+                <form action="/addtodo" method="post">
+                    <!-- for todo text -->
+                    <div class="description">
+                        <label for="description">description</label>
+                        <input type="text" id="description" name="newtodo"
+                            placeholder="What do you need to do?" />
+                    </div>
+                    <!-- for category -->
+                    <div class="category">
+                        <label for="category">category</label>
+                        <select id="category" name="category">
+                            <option>Choose a category</option>
+                            <option value="personal">Personal</option>
+                            <option value="work">Work</option>
+                            <option value="school">School</option>
+                            <option value="other">Others</option>
+                        </select>
+                    </div>
+                    <!-- date input -->
+                    <div class="date">
+                        <label for="date">date</label>
+                        <input type="date" name="date" id="mydate" />
+                    </div>
+
+                    <!-- add and delete buttons -->
+                    <div class="buttons">
+                        <button id="btn1" type="submit">
+                            <i class="fa-solid fa-plus"></i>
+                            Add task
+                        </button>
+                        <button id="btn2" class="delete" type="submit"
+                            formaction="/delete-todo" formmethod="POST">
+                            <i class="fa-solid fa-trash-can"></i>
+                            delete
+                        </button>
+                    </div>
+                </form>
+                <!-- todo lists -->
+                <ul class="lists">
+                    <% for(let todo of todotext){ %>
+                    <li>
+                        <div class="task">
+                            <div class="task-detail">
+                                <form>
+                                    <label class="custom">
+                                        <%= todo.text %>
+                                        <input type="checkbox" name="checkbox"
+                                            <%=todo.isChecked?"checked":"" %>>
+                                        <span class="checkmark"
+                                            id="<%= todo._id %>"></span>
+                                    </label>
+                                </form>
+
+                            </div>
+                            <div class="task-date">
+                                <i class="fa-solid fa-calendar-days"></i>
+                                <%= todo.calDate.month %> <%= todo.calDate.date
+                                %>, <%= todo.calDate.year %>
+                                <!-- May 2, 2019 -->
+                            </div>
+                        </div>
+                        <% if(todo.isChecked){ %>
+                        <button class="edit-btn" type="submit" id="E<%= todo._id %>">Edit</button>
+                       <% } %>
+                        <div class="task-type <%= todo.category %>">
+                            <%= todo.category %>
+                        </div>
+                    </li>
+                    <% } %>
+                </ul>
+            </div>
+        </div>
+        <script src="/js/home.js"></script>
     </body>
 </html>
